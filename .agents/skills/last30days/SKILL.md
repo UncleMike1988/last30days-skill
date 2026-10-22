@@ -92,7 +92,7 @@ To detect first run: check if `~/.config/last30days/.env` exists. If it does NOT
 **When first run is detected, detect your platform first:**
 
 **If you do NOT have WebSearch capability (OpenClaw, Codex, raw CLI):** Run the OpenClaw setup flow below.
-**If you DO have WebSearch (Claude Code):** Run the standard setup flow below.
+**If you DO have WebSearch (Codex):** Run the standard setup flow below.
 
 ---
 
@@ -137,7 +137,7 @@ After setup, write `SETUP_COMPLETE=true` to .env and proceed to research.
 
 ---
 
-### Claude Code Setup Flow (Standard)
+### Codex Setup Flow (Standard)
 
 **You MUST follow these steps IN ORDER. Do NOT skip ahead to the topic picker or research. The sequence is: (1) welcome text -> (2) setup modal -> (3) run setup if chosen -> (4) optional ScrapeCreators modal -> (5) topic picker. You MUST start at step 1.**
 
@@ -212,7 +212,7 @@ Options:
 **Call AskUserQuestion:**
 Question: "What do you want to research first?"
 Options:
-- "Claude Code vs Codex" - tech comparison
+- "Codex vs Codex" - tech comparison
 - "Sam Altman" - person in the news
 - "Warriors Basketball" - sports
 - "AI Legal Prompting Techniques" - niche/professional
@@ -342,7 +342,7 @@ last30days has no affiliation with any API provider - no referrals, no kickbacks
 
 Before doing anything, parse the user's input for:
 
-1. **TOPIC**: What they want to learn about (e.g., "web app mockups", "Claude Code skills", "image generation")
+1. **TOPIC**: What they want to learn about (e.g., "web app mockups", "Codex skills", "image generation")
 2. **TARGET TOOL** (if specified): Where they'll use the prompts (e.g., "Nano Banana Pro", "ChatGPT", "Midjourney")
 3. **QUERY TYPE**: What kind of research they want:
    - **PROMPTING** - "X prompts", "prompting for X", "X best practices" → User wants to learn techniques and get copy-paste prompts
@@ -420,7 +420,7 @@ OR for products:
 ```
 WebSearch("{TOPIC} creator founder X twitter site:x.com")
 ```
-Examples: Sam Altman -> @OpenAI, Dario Amodei -> @AnthropicAI, OpenClaw -> @steipete (Peter Steinberger), Paperclip -> @dotta, Claude Code -> @alexalbert__.
+Examples: Sam Altman -> @OpenAI, Dario Amodei -> @AnthropicAI, OpenClaw -> @steipete (Peter Steinberger), Paperclip -> @dotta, Codex -> @alexalbert__.
 
 **3. 1-2 related handles** -- People/entities closely associated with the topic (spouse, collaborator, band member), PLUS 1-2 prominent commentator/media handles that regularly cover this topic:
 ```
@@ -597,7 +597,7 @@ Extract 3-5 subreddit names from the results. Store as `RESOLVED_SUBREDDITS` (co
 
 **3. TikTok hashtags + creators** — **INFER these from your topic knowledge. Do NOT WebSearch for "{PERSON} TikTok account" — most people/CEOs don't have TikTok, and the search is wasted.**
 
-- **Hashtags:** Infer 2-3 from the topic name + category. Examples: "Kanye West" → `kanyewest,ye,bully`. "Claude Code" → `claudecode,aiagent,aicoding`. "Sam Altman" → `samaltman,openai,chatgpt`.
+- **Hashtags:** Infer 2-3 from the topic name + category. Examples: "Kanye West" → `kanyewest,ye,bully`. "Codex" → `Codex,aiagent,aicoding`. "Sam Altman" → `samaltman,openai,chatgpt`.
 - **Creators:** Only search if the topic is a content creator, influencer, or brand that likely has TikTok presence. For CEOs, politicians, and non-creator people: skip.
 
 Store as `RESOLVED_HASHTAGS` and `RESOLVED_TIKTOK_CREATORS`.
@@ -730,16 +730,16 @@ Store your plan as `QUERY_PLAN_JSON` — you'll pass it to the script in the nex
 **IMPORTANT: Include `--x-handle={RESOLVED_HANDLE}` in the command. For comparison mode: Pass `--x-handle={TOPIC_A_HANDLE}` to the first pass, `--x-handle={TOPIC_B_HANDLE}` to the second pass, and both to the head-to-head pass. Also include `--subreddits={RESOLVED_SUBREDDITS}`, `--tiktok-hashtags={RESOLVED_HASHTAGS}`, `--tiktok-creators={RESOLVED_TIKTOK_CREATORS}`, and `--ig-creators={RESOLVED_IG_CREATORS}` from Step 0.55. Omit any flag where the value was not resolved (empty).**
 
 ```bash
-# Find skill root — works in repo checkout, Claude Code, or Codex install
+# Find skill root — works in repo checkout, Codex, or Codex install
 for dir in \
   "." \
   "${CLAUDE_PLUGIN_ROOT:-}" \
   "${GEMINI_EXTENSION_DIR:-}" \
-  "$HOME/.claude/plugins/marketplaces/last30days-skill-private" \
-  "$HOME/.claude/plugins/cache/last30days-skill-private/last30days-3-nogem/3.0.0-nogem" \
-  "$HOME/.claude/plugins/cache/last30days-skill-private/last30days-3/3.0.0-alpha" \
-  "$HOME/.claude/skills/last30days-3-nogem" \
-  "$HOME/.claude/skills/last30days-3"; do
+  "$HOME/.Codex/plugins/marketplaces/last30days-skill-private" \
+  "$HOME/.Codex/plugins/cache/last30days-skill-private/last30days-3-nogem/3.0.0-nogem" \
+  "$HOME/.Codex/plugins/cache/last30days-skill-private/last30days-3/3.0.0-alpha" \
+  "$HOME/.Codex/skills/last30days-3-nogem" \
+  "$HOME/.Codex/skills/last30days-3"; do
   [ -n "$dir" ] && [ -f "$dir/scripts/last30days.py" ] && SKILL_ROOT="$dir" && break
 done
 
@@ -930,11 +930,11 @@ For product comparison queries, WebSearch supplements (blog comparisons, review 
 **CRITICAL: Ground your synthesis in the ACTUAL research content, not your pre-existing knowledge.**
 
 Read the research output carefully. Pay attention to:
-- **Exact product/tool names** mentioned (e.g., if research mentions "ClawdBot" or "@clawdbot", that's a DIFFERENT product than "Claude Code" - don't conflate them)
+- **Exact product/tool names** mentioned (e.g., if research mentions "ClawdBot" or "@clawdbot", that's a DIFFERENT product than "Codex" - don't conflate them)
 - **Specific quotes and insights** from the sources - use THESE, not generic knowledge
 - **What the sources actually say**, not what you assume the topic is about
 
-**ANTI-PATTERN TO AVOID**: If user asks about "clawdbot skills" and research returns ClawdBot content (self-hosted AI agent), do NOT synthesize this as "Claude Code skills" just because both involve "skills". Read what the research actually says.
+**ANTI-PATTERN TO AVOID**: If user asks about "clawdbot skills" and research returns ClawdBot content (self-hosted AI agent), do NOT synthesize this as "Codex skills" just because both involve "skills". Read what the research actually says.
 
 **FUN CONTENT: If the research output includes a "## Best Takes" section or items tagged with `fun:` scores, weave at least 2-3 of the funniest/cleverest quotes into your synthesis.** Reddit comments and X posts with high fun scores are the voice of the people. A 1,338-upvote comment that says "Where's the limewire link" tells you more about the cultural moment than a news article. Quote the actual text. Don't put fun content in a separate section - mix it into the narrative where it fits naturally. This is what makes the report feel alive rather than like a news summary.
 
@@ -966,10 +966,10 @@ When user asks "best X" or "top X", they want a LIST of specific things:
 - Note which sources recommend each (Reddit thread, X post, blog)
 - List them by popularity/mention count
 
-**BAD synthesis for "best Claude Code skills":**
+**BAD synthesis for "best Codex skills":**
 > "Skills are powerful. Keep them under 500 lines. Use progressive disclosure."
 
-**GOOD synthesis for "best Claude Code skills":**
+**GOOD synthesis for "best Codex skills":**
 > "Most mentioned skills: /commit (5 mentions), remotion skill (4x), git-worktree (3x), /pr (3x). The Remotion announcement got 16K likes on X."
 
 ### If QUERY_TYPE = COMPARISON

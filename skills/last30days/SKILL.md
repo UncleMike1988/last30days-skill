@@ -2,7 +2,7 @@
 name: last30days-v3-spec
 version: "3.0.0"
 description: "Internal architecture spec for the v3 last30days runtime pipeline. Not user-invocable."
-argument-hint: "last30days codex vs claude code"
+argument-hint: "last30days codex vs Codex"
 allowed-tools: Bash, Read, Write, WebSearch
 homepage: https://github.com/mvanhorn/last30days-skill
 repository: https://github.com/mvanhorn/last30days-skill
@@ -35,7 +35,7 @@ for dir in \
   "${GEMINI_EXTENSION_DIR:-}" \
   "$HOME/.openclaw/workspace/skills/last30days" \
   "$HOME/.openclaw/skills/last30days" \
-  "$HOME/.claude/skills/last30days" \
+  "$HOME/.Codex/skills/last30days" \
   "$HOME/.agents/skills/last30days" \
   "$HOME/.codex/skills/last30days"; do
   [ -n "$dir" ] && [ -f "$dir/scripts/last30days.py" ] && SKILL_ROOT="$dir" && break
@@ -126,10 +126,10 @@ Extract key facts from the output first, then synthesize across sources. Lead wi
 
 ### Ground in actual research, not pre-existing knowledge
 
-Use exact product/tool names, specific quotes, and what sources actually say. If research mentions "ClawdBot" and "@clawdbot", that is a different product than "Claude Code" -- read what the research actually says.
+Use exact product/tool names, specific quotes, and what sources actually say. If research mentions "ClawdBot" and "@clawdbot", that is a different product than "Codex" -- read what the research actually says.
 
 **Anti-pattern to avoid:**
-- BAD: User asks "best Claude Code skills" and you respond with generic advice: "Skills are powerful. Keep them under 500 lines."
+- BAD: User asks "best Codex skills" and you respond with generic advice: "Skills are powerful. Keep them under 500 lines."
 - GOOD: You respond with specifics from the research: "Most mentioned: /commit (5 mentions), remotion skill (4x), git-worktree (3x). The Remotion announcement got 16K likes on X per @thedorbrothers."
 
 ### Source weighting (highest to lowest signal)
